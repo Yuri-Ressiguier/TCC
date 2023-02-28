@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class Melee : MonoBehaviour
 {
-    [field: SerializeField] Player player;
+    [field: SerializeField] Player _player;
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject != null)
         {
-            Enemy other = collision.gameObject.GetComponent<Enemy>();
-            other.TakeHit(player.Power);
+            if (collision.gameObject.tag == "Enemy")
+            {
+                Enemy other = collision.gameObject.GetComponent<Enemy>();
+
+                if (other != null)
+                {
+                    other.TakeHit(_player.Power);
+                }
+            }
         }
+
     }
 }

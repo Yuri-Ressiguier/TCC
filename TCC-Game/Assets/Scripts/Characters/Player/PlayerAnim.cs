@@ -24,6 +24,14 @@ public class PlayerAnim : MonoBehaviour
         Anim.SetFloat("LastMoveVertical", lastMoveY);
     }
 
+    public void WalkingAtk(float directionX, float directionY, float magnitude)
+    {
+        Anim.SetFloat("Horizontal", directionX);
+        Anim.SetFloat("Vertical", directionY);
+        Anim.SetFloat("Magnitude", magnitude);
+
+        Anim.SetTrigger("WalkingAtk");
+    }
 
     public void Attack()
     {

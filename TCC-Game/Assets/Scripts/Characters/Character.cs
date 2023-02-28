@@ -10,6 +10,7 @@ public abstract class Character : MonoBehaviour
     [field: SerializeField] public float Power { get; set; }
     public Vector2 LastMoveDirection { get; set; }
     public Vector2 InitialPosition { get; set; }
+    public float InitialLife { get; set; }
     public bool IsStunned { get; set; }
 
 
@@ -20,13 +21,17 @@ public abstract class Character : MonoBehaviour
     //Necessitam estanciar
     public Rigidbody2D Rig { get; set; }
     protected SpriteRenderer MySprite { get; set; }
+    protected Collider2D Col { get; set; }
 
     public virtual void Start()
     {
         Rig = GetComponent<Rigidbody2D>();
         MySprite = GetComponent<SpriteRenderer>();
+        Col = GetComponent<Collider2D>();
         IsStunned = false;
         InitialPosition = transform.position;
+        InitialLife = Life;
+        _canTakeHit = true;
     }
 
 
@@ -44,17 +49,15 @@ public abstract class Character : MonoBehaviour
                 _canTakeHit = false;
                 StartCoroutine("TakeHitDelay");
             }
-
-
         }
-
     }
 
-    void Die()
+    public virtual void Die()
     {
         IsStunned = true;
-        MySprite.color = new Color(0, 0, 0, 1);
-        Destroy(gameObject, 2);
+        MySprite.enabled = false;
+        Col.enabled = false;
+        Destroy(gameObject, 1.5f);
     }
 
     IEnumerator TakeHitDelay()
@@ -70,8 +73,6 @@ public abstract class Character : MonoBehaviour
             MySprite.enabled = true;
             yield return new WaitForSeconds(0.15f);
         }
-
-        yield return new WaitForSeconds(1);
         _canTakeHit = true;
     }
 }

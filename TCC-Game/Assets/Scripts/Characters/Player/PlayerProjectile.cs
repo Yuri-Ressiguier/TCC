@@ -2,16 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class PlayerProjectile : Projectile
 {
-    [field: SerializeField] public float Damage { get; set; }
-    public Vector2 Direction { get; set; }
-    public Rigidbody2D Rig { get; set; }
-
-    void Start()
+    public override void Start()
     {
-        Rig = GetComponent<Rigidbody2D>();
-        Destroy(gameObject, 8);
+        base.Start();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

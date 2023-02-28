@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,10 +18,11 @@ public class Slime : Enemy
 
 
     //Controles
-
     private bool _canMoveAtk { get; set; }
     private bool _canProjectileAtk { get; set; }
-    private bool _canWalk { get; set; }
+    [field: SerializeField] private GameObject _aim { get; set; }
+    [field: SerializeField] private GameObject _projectile { get; set; }
+    private Vector3 _targetPosition { get; set; }
 
 
 
@@ -35,14 +37,10 @@ public class Slime : Enemy
     {
         base.Start();
         AnimScript = GetComponent<SlimeAnim>();
-        _agent.updateRotation = false;
-        _agent.updateUpAxis = false;
         _canMoveAtk = true;
         _canProjectileAtk = true;
-        //_canWalk = true;
-        _canTakeHit = true;
-        _agent.enabled = true;
         Rig.isKinematic = true;
+
 
     }
 
@@ -53,19 +51,9 @@ public class Slime : Enemy
         {
             CheckRanges();
         }
-
     }
 
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-
-        if (collision.gameObject.name == "Player" && collision.collider == _player.MainCollider)
-        {
-            _player.TakeHit(Power / 5);
-        }
-
-    }
 
     void CheckRanges()
     {
@@ -75,25 +63,27 @@ public class Slime : Enemy
         Collider2D projectileAtk = Physics2D.OverlapCircle(transform.position, ProjectileAtkRange, PlayerLayer);
         AnimScript.Move(_agent.velocity.x, _agent.velocity.y, _agent.velocity.magnitude);
 
-        if (moveAtk != null && _canMoveAtk)
+        if (moveAtk != null && _canMoveAtk && _agent.isActiveAndEnabled)
         {
+            _canMoveAtk = false;
+            ReturnToStartTimer = 0;
             MoveAttack();
         }
-        //else if (projectileAtk != null && _canProjectileAtk)
-        //{
-        //    _agent.isStopped = true;
-
-
-        //}
+        else if (projectileAtk != null && _canProjectileAtk && _agent.isActiveAndEnabled)
+        {
+            _canProjectileAtk = false;
+            ReturnToStartTimer = 0;
+            StartCoroutine("ProjectileAttack");
+        }
         else if (setDestination != null && _agent.isActiveAndEnabled)
         {
-            _agent.isStopped = false;
+            ReturnToStartTimer = 0;
             _agent.SetDestination(_player.transform.position);
 
         }
         else
         {
-            //Lógica para perambular
+            //Perambular
 
         }
 
@@ -114,16 +104,10 @@ public class Slime : Enemy
         LastMoveDirection = _agent.velocity;
         DisableAgent();
         Rig.AddForce(LastMoveDirection * 40, ForceMode2D.Force);
-        _canMoveAtk = false;
+
         StartCoroutine("MoveAtkDelay");
         AnimScript.MoveAttack(LastMoveDirection.x, LastMoveDirection.y);
     }
-
-    void ProjectileAttack()
-    {
-
-    }
-
 
 
     //Coroutines
@@ -139,5 +123,32 @@ public class Slime : Enemy
         _canProjectileAtk = true;
     }
 
+    IEnumerator ProjectileAttack()
+    {
+        NavMeshHit hit;
+        if (!_agent.Raycast(_player.transform.position, out hit))
+        {
+            _targetPosition = hit.position;
+            LastMoveDirection = _agent.velocity;
+            DisableAgent();
+            AnimScript.ProjectileAttack(LastMoveDirection.x, LastMoveDirection.y);
+
+            yield return new WaitForSeconds(0.5f);
+
+            GameObject projectile = Instantiate(_projectile, _aim.transform.position, _aim.transform.rotation);
+            Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
+            projectile.GetComponent<SlimeProjectile>().Damage = Power / 3;
+            projectile.GetComponent<Rigidbody2D>().AddForce((_targetPosition - projectile.transform.position).normalized * 12, ForceMode2D.Force);
+
+            yield return new WaitForSeconds(1.0f);
+            EnableAgent();
+
+        }
+
+        StartCoroutine("ProjectileAtkDelay");
+
+
+
+    }
 
 }

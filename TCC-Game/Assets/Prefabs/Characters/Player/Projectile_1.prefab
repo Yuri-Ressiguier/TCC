@@ -96,10 +96,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4127665322360964037}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efbd57cdf67a8814c948853870926942, type: 3}
+  m_Script: {fileID: 11500000, guid: c009c897f6027cb4b82f7864aae5c6ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Damage>k__BackingField: 5
 --- !u!58 &410583234609892613
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -128,7 +127,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 1
+  m_Mass: 0.015393804
   m_LinearDrag: 0.5
   m_AngularDrag: 0.05
   m_GravityScale: 0

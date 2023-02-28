@@ -26,4 +26,11 @@ public class SlimeAnim : MonoBehaviour
         Anim.SetTrigger("MoveAtk");
     }
 
+    public void ProjectileAttack(float directionX, float directionY)
+    {
+
+        Anim.SetFloat("LastMoveHorizontal", directionX);
+        Anim.SetFloat("LastMoveVertical", directionY);
+        Anim.SetTrigger("ProjectileAtk");
+    }
 }
