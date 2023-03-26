@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public abstract class Enemy : Character
 {
@@ -15,6 +16,8 @@ public abstract class Enemy : Character
 
     [field: SerializeField] public GameObject Coin { get; set; }
     [field: SerializeField] public GameObject HealthPotion { get; set; }
+    [field: SerializeField] public Image HealthBar { get; set; }
+
 
 
     public override void Start()
@@ -42,12 +45,12 @@ public abstract class Enemy : Character
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public virtual void OnCollisionEnter2D(Collision2D collision)
     {
 
         if (collision.gameObject.name == "Player" && collision.collider == _player.MainCollider)
         {
-            _player.TakeHit(Power / 5);
+            _player.TakeHit(Power);
         }
 
     }
@@ -55,14 +58,19 @@ public abstract class Enemy : Character
     public override void TakeHit(float dmg)
     {
         base.TakeHit(dmg);
-        EnableAgent();
-        _agent.SetDestination(_player.transform.position);
+        HealthBar.fillAmount = Life / LifeCap;
+        if (_agent.isActiveAndEnabled)
+        {
+            _agent.SetDestination(_player.transform.position);
+        }
+
     }
 
     public override void Die()
     {
+        GenerateExp();
         base.Die();
-        Spawner.ObjectList.Remove(this);
+        //Spawner.ObjectList.Remove(this);
         StartCoroutine("Drop");
     }
 
@@ -81,34 +89,37 @@ public abstract class Enemy : Character
         Rig.isKinematic = false;
     }
 
-    protected void StartStopAgent()
+    protected void PauseAgent()
     {
-        if (_agent.isStopped)
-        {
-            _agent.isStopped = false;
-        }
-        else
-        {
-            _agent.isStopped = true;
-        }
+        _agent.isStopped = true;
     }
 
-    protected void ReturnToStart()
+    protected void UnpauseAgent()
+    {
+        _agent.isStopped = false;
+    }
+
+    protected virtual void ReturnToStart()
     {
         if ((Mathf.Abs(transform.position.x - InitialPosition.x) < 0.5) && (Mathf.Abs(transform.position.y - InitialPosition.y) < 0.5))
         {
             float newXAxis = transform.position.x + Random.Range(-2, 2);
             float newYAxis = transform.position.y + Random.Range(-2, 2);
-
             _agent.SetDestination(new Vector2(newXAxis, newYAxis));
         }
         else
         {
             _agent.isStopped = false;
-            Life = InitialLife;
+            Life = LifeCap;
+            HealthBar.fillAmount = Life / LifeCap;
             _agent.SetDestination(InitialPosition);
         }
 
+    }
+
+    protected void GenerateExp()
+    {
+        _player.ReceiveExp((int)Mathf.Round((LifeCap + Power) / 2));
     }
 
     //Coroutines
@@ -129,7 +140,7 @@ public abstract class Enemy : Character
             default:
                 GameObject coin = Instantiate(Coin, transform.position, transform.rotation);
                 coin.name = Coin.name;
-                coin.GetComponent<Coin>().Value = (int)Mathf.Round(((InitialLife + Power) / 2) / 10);
+                coin.GetComponent<Coin>().Value = (int)Mathf.Round(((LifeCap + Power) / 2) / 2);
                 break;
         }
 

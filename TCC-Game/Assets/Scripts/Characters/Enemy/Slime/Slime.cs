@@ -24,24 +24,17 @@ public class Slime : Enemy
     [field: SerializeField] private GameObject _projectile { get; set; }
     private Vector3 _targetPosition { get; set; }
 
-
-
     //Outros
     public SlimeAnim AnimScript { get; set; }
 
 
-
-
-    // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
         AnimScript = GetComponent<SlimeAnim>();
-        _canMoveAtk = true;
-        _canProjectileAtk = true;
+        StartCoroutine("MoveAtkDelay");
+        StartCoroutine("ProjectileAtkDelay");
         Rig.isKinematic = true;
-
-
     }
 
 
@@ -86,9 +79,6 @@ public class Slime : Enemy
             //Perambular
 
         }
-
-
-
     }
 
     private void OnDrawGizmosSelected()
@@ -137,8 +127,8 @@ public class Slime : Enemy
 
             GameObject projectile = Instantiate(_projectile, _aim.transform.position, _aim.transform.rotation);
             Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
-            projectile.GetComponent<SlimeProjectile>().Damage = Power / 3;
-            projectile.GetComponent<Rigidbody2D>().AddForce((_targetPosition - projectile.transform.position).normalized * 12, ForceMode2D.Force);
+            projectile.GetComponent<SlimeProjectile>().Damage = Power / 2;
+            projectile.GetComponent<Rigidbody2D>().AddForce((_targetPosition - projectile.transform.position).normalized * 8, ForceMode2D.Force);
 
             yield return new WaitForSeconds(1.0f);
             EnableAgent();

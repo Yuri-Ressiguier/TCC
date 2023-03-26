@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4131814168097862215}
   - component: {fileID: 1050257535665444095}
   - component: {fileID: 642779997540020816}
+  - component: {fileID: 3998241575741587695}
   m_Layer: 0
   m_Name: Tombstone_2
   m_TagString: Untagged
@@ -101,3 +102,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.33}
   m_Size: {x: 0.54, y: 0.7}
   m_Direction: 0
+--- !u!114 &3998241575741587695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591436681858242512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

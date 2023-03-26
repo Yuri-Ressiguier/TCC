@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6938014682447616439}
   - component: {fileID: 9041334912067312097}
   - component: {fileID: 4021266267648208562}
+  - component: {fileID: 8737772337019714025}
   m_Layer: 0
   m_Name: Desert_Tree_1
   m_TagString: Untagged
@@ -101,3 +102,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.48}
   m_Size: {x: 0.55, y: 0.85}
   m_Direction: 0
+--- !u!114 &8737772337019714025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489606021815495092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

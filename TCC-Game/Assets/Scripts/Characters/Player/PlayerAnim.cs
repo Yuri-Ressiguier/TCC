@@ -33,6 +33,15 @@ public class PlayerAnim : MonoBehaviour
         Anim.SetTrigger("WalkingAtk");
     }
 
+    public void WalkingDef(float directionX, float directionY, float magnitude)
+    {
+        Anim.SetFloat("Horizontal", directionX);
+        Anim.SetFloat("Vertical", directionY);
+        Anim.SetFloat("Magnitude", magnitude);
+
+        Anim.SetTrigger("WalkingDef");
+    }
+
     public void Attack()
     {
         Anim.SetTrigger("Attack");

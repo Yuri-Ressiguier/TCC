@@ -5,7 +5,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class SlimeProjectile : Projectile
 {
-    protected Player _player;
+    private Player _player;
     public override void Start()
     {
         base.Start();

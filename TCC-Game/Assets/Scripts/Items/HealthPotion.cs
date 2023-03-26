@@ -10,7 +10,7 @@ public class HealthPotion : MonoBehaviour
     void Start()
     {
         Rig = GetComponent<Rigidbody2D>();
-        Value = 33;
+        Value = 10;
     }
 
 }

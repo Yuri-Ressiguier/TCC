@@ -10,7 +10,7 @@ public abstract class Character : MonoBehaviour
     [field: SerializeField] public float Power { get; set; }
     public Vector2 LastMoveDirection { get; set; }
     public Vector2 InitialPosition { get; set; }
-    public float InitialLife { get; set; }
+    public float LifeCap { get; set; }
     public bool IsStunned { get; set; }
 
 
@@ -30,7 +30,7 @@ public abstract class Character : MonoBehaviour
         Col = GetComponent<Collider2D>();
         IsStunned = false;
         InitialPosition = transform.position;
-        InitialLife = Life;
+        LifeCap = Life;
         _canTakeHit = true;
     }
 

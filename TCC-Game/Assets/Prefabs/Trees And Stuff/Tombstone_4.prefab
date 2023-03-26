@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2229147953551842681}
   - component: {fileID: 6124115837187277556}
   - component: {fileID: 5538051979187848409}
+  - component: {fileID: 1796905177837419008}
   m_Layer: 0
   m_Name: Tombstone_4
   m_TagString: Untagged
@@ -111,3 +112,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8125, y: 0.44}
   m_EdgeRadius: 0
+--- !u!114 &1796905177837419008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136062312036405506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

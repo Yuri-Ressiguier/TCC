@@ -13,10 +13,15 @@ public class Player : Character
     private float _energy { get; set; }
     private float _energyLimit { get; set; }
     private float _walkingMeleeEnergy { get; set; }
+    private float _walkingDefenseEnergy { get; set; }
     private float _meleeEnergy { get; set; }
     private float _rangedAttackEnergy { get; set; }
     private float _defenseEnergy { get; set; }
     private float _interruptEnergy { get; set; }
+    private int _lvl { get; set; }
+    private int _lvlCap { get; set; }
+    private int _expCap { get; set; }
+    private int _exp { get; set; }
 
     //Delays
     [field: SerializeField] private float MeleeTimeDelay { get; set; }
@@ -45,8 +50,19 @@ public class Player : Character
     public int Coins { get; set; }
     public int HealthPotions { get; set; }
 
-
-
+    private static Player _instance;
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     public override void Start()
@@ -58,10 +74,14 @@ public class Player : Character
         _canDefense = true;
         _canInterrupt = true;
         IsRangedModeOn = false;
+        _expCap = 20;
+        _lvl = 1;
+        _lvlCap = 20;
 
         //Energy
         _energyLimit = 100;
         _walkingMeleeEnergy = 40;
+        _walkingDefenseEnergy = 40;
         _meleeEnergy = 30;
         _defenseEnergy = 30;
         _rangedAttackEnergy = 50;
@@ -75,7 +95,7 @@ public class Player : Character
         if (_energy < _energyLimit)
         {
             _energy += 20 * Time.deltaTime;
-            GameController.GCInstance.EnergyBar.fillAmount = _energy / 100;
+            UiController.UiInstance.EnergyBar.fillAmount = _energy / 100;
         }
 
     }
@@ -96,17 +116,26 @@ public class Player : Character
                 case "Coin":
                     Coin coin = other.gameObject.GetComponent<Coin>();
                     Coins += coin.Value;
-                    GameController.GCInstance.TxtCoins.text = Coins.ToString();
+                    UiController.UiInstance.TxtCoins.text = Coins.ToString();
                     coin.Pick();
                     break;
                 case "HealthPotion":
                     HealthPotions += 1;
-                    GameController.GCInstance.TxtHealthPotions.text = HealthPotions.ToString();
+                    UiController.UiInstance.TxtHealthPotions.text = HealthPotions.ToString();
                     Destroy(other.gameObject, 0);
                     break;
                 default:
                     break;
             }
+        }
+
+        if (other.gameObject.tag == "Gate")
+        {
+            SaveState();
+            Vector2 nextPos = other.gameObject.GetComponent<Gate>().NextMap();
+            gameObject.transform.position = nextPos;
+            LoadState();
+
         }
     }
 
@@ -157,9 +186,17 @@ public class Player : Character
 
     public void DefenseInput()
     {
-        if (!_isWalking && !IsRangedModeOn && !IsStunned)
+        if (!IsRangedModeOn && !IsStunned)
         {
-            Defense();
+            if (_isWalking)
+            {
+                WalkingDef();
+            }
+            else
+            {
+                Defense();
+            }
+
         }
     }
 
@@ -183,15 +220,15 @@ public class Player : Character
     {
         if (HealthPotions > 0)
         {
-            GameController.GCInstance.BtnHealthPotion.interactable = false;
+            UiController.UiInstance.BtnHealthPotion.interactable = false;
             HealthPotions -= 1;
-            GameController.GCInstance.TxtHealthPotions.text = HealthPotions.ToString();
-            if (Life + HealthPotion.Value >= 100)
+            UiController.UiInstance.TxtHealthPotions.text = HealthPotions.ToString();
+            if (Life + HealthPotion.Value >= LifeCap)
             {
-                Life = 100;
+                Life = LifeCap;
             }
             Life += HealthPotion.Value;
-            GameController.GCInstance.LifeBar.fillAmount = Life / 100;
+            UiController.UiInstance.LifeBar.fillAmount = Life / LifeCap;
             StartCoroutine("HealDelay");
         }
     }
@@ -234,7 +271,7 @@ public class Player : Character
     public override void TakeHit(float dmg)
     {
         base.TakeHit(dmg);
-        GameController.GCInstance.LifeBar.fillAmount = Life / 100;
+        UiController.UiInstance.LifeBar.fillAmount = Life / LifeCap;
     }
 
     void WalkingAtk()
@@ -243,7 +280,7 @@ public class Player : Character
         {
             if (_energy >= _walkingMeleeEnergy)
             {
-                GameController.GCInstance.BtnAttack.interactable = false;
+                UiController.UiInstance.BtnAttack.interactable = false;
                 AnimScript.WalkingAtk(_direction.x, _direction.y, _direction.magnitude);
                 _energy -= _walkingMeleeEnergy;
                 _canAttackMelee = false;
@@ -251,7 +288,26 @@ public class Player : Character
             }
             else
             {
-                GameController.GCInstance.EnergyWarming();
+                UiController.UiInstance.EnergyWarning();
+            }
+        }
+    }
+
+    void WalkingDef()
+    {
+        if (_canDefense)
+        {
+            if (_energy >= _walkingDefenseEnergy)
+            {
+                UiController.UiInstance.BtnDefense.interactable = false;
+                AnimScript.WalkingDef(_direction.x, _direction.y, _direction.magnitude);
+                _energy -= _walkingDefenseEnergy;
+                _canDefense = false;
+                StartCoroutine("DefenseDelay");
+            }
+            else
+            {
+                UiController.UiInstance.EnergyWarning();
             }
         }
     }
@@ -264,9 +320,9 @@ public class Player : Character
         {
             if (_canAttackRanged)
             {
-                if (_energy >= _walkingMeleeEnergy)
+                if (_energy >= _rangedAttackEnergy)
                 {
-                    GameController.GCInstance.BtnAttack.interactable = false;
+                    UiController.UiInstance.BtnAttack.interactable = false;
                     AnimScript.Attack();
                     _energy -= _rangedAttackEnergy;
                     GameObject selectedAim = _aims[RangedModeOrientation];
@@ -276,7 +332,7 @@ public class Player : Character
                 }
                 else
                 {
-                    GameController.GCInstance.EnergyWarming();
+                    UiController.UiInstance.EnergyWarning();
                 }
             }
         }
@@ -286,7 +342,7 @@ public class Player : Character
             {
                 if (_energy >= _meleeEnergy)
                 {
-                    GameController.GCInstance.BtnAttack.interactable = false;
+                    UiController.UiInstance.BtnAttack.interactable = false;
                     AnimScript.Attack();
                     _energy -= _meleeEnergy;
                     _canAttackMelee = false;
@@ -294,7 +350,7 @@ public class Player : Character
                 }
                 else
                 {
-                    GameController.GCInstance.EnergyWarming();
+                    UiController.UiInstance.EnergyWarning();
                 }
             }
         }
@@ -306,7 +362,7 @@ public class Player : Character
         {
             if (_energy >= _defenseEnergy)
             {
-                GameController.GCInstance.BtnDefense.interactable = false;
+                UiController.UiInstance.BtnDefense.interactable = false;
                 AnimScript.Defense();
                 _energy -= _defenseEnergy;
                 _canDefense = false;
@@ -314,7 +370,7 @@ public class Player : Character
             }
             else
             {
-                GameController.GCInstance.EnergyWarming();
+                UiController.UiInstance.EnergyWarning();
             }
         }
     }
@@ -325,7 +381,7 @@ public class Player : Character
         {
             if (_energy >= _interruptEnergy)
             {
-                GameController.GCInstance.BtnInterrupt.interactable = false;
+                UiController.UiInstance.BtnInterrupt.interactable = false;
                 AnimScript.Interrupt();
                 _energy -= _interruptEnergy;
                 _canInterrupt = false;
@@ -333,7 +389,7 @@ public class Player : Character
             }
             else
             {
-                GameController.GCInstance.EnergyWarming();
+                UiController.UiInstance.EnergyWarning();
             }
         }
     }
@@ -343,16 +399,79 @@ public class Player : Character
     {
         if (IsRangedModeOn)
         {
-            GameController.GCInstance.ChangeAttackImg(true);
+            UiController.UiInstance.ChangeAttackImg(true);
             IsRangedModeOn = false;
             AnimScript.TurnRangedModeOff();
         }
         else
         {
-            GameController.GCInstance.ChangeAttackImg(false);
+            UiController.UiInstance.ChangeAttackImg(false);
             IsRangedModeOn = true;
             AnimScript.TurnRangedModeOn();
         }
+    }
+
+    public void ReceiveExp(int exp)
+    {
+        if (exp + _exp >= _expCap)
+        {
+            int spareExp = exp + _exp - _expCap;
+            LevelUp();
+            _exp = spareExp;
+            _expCap = (int)Mathf.Round(_expCap * 1.2f);
+        }
+        else
+        {
+            _exp += exp;
+        }
+        UiController.UiInstance.ExpBar.fillAmount = (float)Math.Round((float)_exp / _expCap, 2);
+    }
+
+    void LevelUp()
+    {
+        if (_lvl < _lvlCap)
+        {
+            _lvl++;
+            Power += 3;
+            LifeCap += 3;
+            Life = LifeCap;
+            UiController.UiInstance.TxtLvl.text = _lvl.ToString();
+        }
+    }
+
+
+    void SaveState()
+    {
+        PlayerPrefs.SetFloat("Power", Power);
+        PlayerPrefs.SetFloat("Life", Life);
+        PlayerPrefs.SetFloat("LifeCap", LifeCap);
+        PlayerPrefs.SetInt("Exp", _exp);
+        PlayerPrefs.SetInt("ExpCap", _expCap);
+        PlayerPrefs.SetInt("Lvl", _lvl);
+        PlayerPrefs.SetInt("HealthPotions", HealthPotions);
+        PlayerPrefs.SetInt("Coins", Coins);
+
+    }
+
+    void LoadState()
+    {
+        Power = PlayerPrefs.GetFloat("Power");
+        Life = PlayerPrefs.GetFloat("Life");
+        LifeCap = PlayerPrefs.GetFloat("LifeCap");
+        _exp = PlayerPrefs.GetInt("Exp");
+        _expCap = PlayerPrefs.GetInt("ExpCap");
+        _lvl = PlayerPrefs.GetInt("Lvl");
+        HealthPotions = PlayerPrefs.GetInt("HealthPotions");
+        Coins = PlayerPrefs.GetInt("Coins");
+
+        //Atualizar UI
+        UiController.UiInstance.LifeBar.fillAmount = Life / LifeCap;
+        UiController.UiInstance.ExpBar.fillAmount = (float)Math.Round((float)_exp / _expCap, 2);
+        UiController.UiInstance.TxtLvl.text = _lvl.ToString();
+        UiController.UiInstance.TxtHealthPotions.text = HealthPotions.ToString();
+        UiController.UiInstance.TxtCoins.text = Coins.ToString();
+
+
     }
 
     //Coroutines
@@ -361,7 +480,7 @@ public class Player : Character
     {
         yield return new WaitForSeconds(HealTimeDelay);
         _canHeal = true;
-        GameController.GCInstance.BtnHealthPotion.interactable = true;
+        UiController.UiInstance.BtnHealthPotion.interactable = true;
     }
 
 
@@ -369,28 +488,28 @@ public class Player : Character
     {
         yield return new WaitForSeconds(MeleeTimeDelay);
         _canAttackMelee = true;
-        GameController.GCInstance.BtnAttack.interactable = true;
+        UiController.UiInstance.BtnAttack.interactable = true;
     }
 
     IEnumerator RangedAttackDelay()
     {
         yield return new WaitForSeconds(RangedTimeDelay);
         _canAttackRanged = true;
-        GameController.GCInstance.BtnAttack.interactable = true;
+        UiController.UiInstance.BtnAttack.interactable = true;
     }
 
     IEnumerator DefenseDelay()
     {
         yield return new WaitForSeconds(DefenseTimeDelay);
         _canDefense = true;
-        GameController.GCInstance.BtnDefense.interactable = true;
+        UiController.UiInstance.BtnDefense.interactable = true;
     }
 
     IEnumerator InterruptDelay()
     {
         yield return new WaitForSeconds(InterruptTimeDelay);
         _canInterrupt = true;
-        GameController.GCInstance.BtnInterrupt.interactable = true;
+        UiController.UiInstance.BtnInterrupt.interactable = true;
     }
 
 }

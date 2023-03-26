@@ -8,4 +8,28 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Town.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Forest_1.unity
+    guid: 3b839604a2b91484dbd0c7dab3419478
+  - enabled: 1
+    path: Assets/Scenes/Farm.unity
+    guid: 4fae092fc34b72545a308b10524300f2
+  - enabled: 1
+    path: Assets/Scenes/Forest_2.unity
+    guid: 2f04cb5de945b7547be5063a79086b7c
+  - enabled: 1
+    path: Assets/Scenes/Beach_1.unity
+    guid: 6b4b5ff2d9fabfc4bb07f0833a3ba533
+  - enabled: 1
+    path: Assets/Scenes/Beach_2.unity
+    guid: dda01180bc8de764fb70799f80ea4e30
+  - enabled: 1
+    path: Assets/Scenes/Hills.unity
+    guid: 77b6229dc60482e449566c0e79c6a907
+  - enabled: 1
+    path: Assets/Scenes/Hills_2.unity
+    guid: fd208a9483bc75e42996023a17d49897
+  - enabled: 1
+    path: Assets/Scenes/Cemetery.unity
+    guid: 1696d80ad4d7db741b05e0aa2de13b5a
   m_configObjects: {}
