@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7569375261303509323}
   - component: {fileID: 410583234609892613}
   - component: {fileID: 1079224284049288053}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,5 +134,5 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0

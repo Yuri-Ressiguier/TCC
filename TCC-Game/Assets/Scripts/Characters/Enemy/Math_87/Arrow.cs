@@ -5,7 +5,7 @@ using UnityEngine;
 public class Arrow : Projectile
 {
     private Player _player;
-    [field: SerializeField] private Sprite LeftImg { get; set; }
+    [field: SerializeField] private Sprite OtherImg { get; set; }
     public override void Start()
     {
         base.Start();
@@ -14,7 +14,7 @@ public class Arrow : Projectile
 
     public void ChangeSprite()
     {
-        GetComponent<SpriteRenderer>().sprite = LeftImg;
+        GetComponent<SpriteRenderer>().sprite = OtherImg;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

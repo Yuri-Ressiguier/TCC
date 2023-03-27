@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8008931310696533919}
   - component: {fileID: 8875997536449425556}
   - component: {fileID: 4551572235111391320}
-  m_Layer: 0
-  m_Name: Math_87 Projectile
+  m_Layer: 7
+  m_Name: Math_87_Hor_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,7 +122,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &4551572235111391320
 MonoBehaviour:
@@ -136,4 +136,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa54a99b1dfd9ab42932b7edcf2d981f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <LeftImg>k__BackingField: {fileID: 1431543084, guid: 475399b33a51284448b8a632c289d876, type: 3}
+  <OtherImg>k__BackingField: {fileID: 1431543084, guid: 475399b33a51284448b8a632c289d876, type: 3}

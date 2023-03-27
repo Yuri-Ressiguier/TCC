@@ -956,6 +956,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: GameObjects_40
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 41
+        width: 112
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c53c3e9ba594dd4197420ea67928080
+      internalID: -1310978363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameObjects_41
+      rect:
+        serializedVersion: 2
+        x: 945
+        y: 160
+        width: 62
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f0a2cdd939528945a9d320c97eb96cd
+      internalID: 1129356255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -972,7 +1014,9 @@ TextureImporter:
       GameObjects_12: -10260749
       GameObjects_17: 560917035
       GameObjects_37: 545082126
+      GameObjects_41: 1129356255
       GameObjects_5: 539411688
+      GameObjects_40: -1310978363
       GameObjects_36: -1426528351
       GameObjects_10: 876560323
       GameObjects_39: -1702658393

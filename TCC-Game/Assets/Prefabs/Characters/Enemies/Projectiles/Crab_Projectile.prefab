@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 400931158946457631}
   - component: {fileID: -1917023723585787963}
   - component: {fileID: 2123946948336352692}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Crab_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,5 +155,5 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0

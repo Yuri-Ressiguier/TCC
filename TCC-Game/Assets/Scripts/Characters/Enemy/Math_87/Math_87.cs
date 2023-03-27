@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +16,8 @@ public class Math_87 : Enemy
     //Controles
     private bool _canArrowAtk { get; set; }
     [field: SerializeField] private GameObject _aim { get; set; }
-    [field: SerializeField] private GameObject _projectile { get; set; }
+    [field: SerializeField] private GameObject _projectile_horizontal { get; set; }
+    [field: SerializeField] private GameObject _projectile_vertical { get; set; }
     private Vector3 _targetPosition { get; set; }
     private bool _canFleeFromPlayer { get; set; }
 
@@ -58,15 +60,37 @@ public class Math_87 : Enemy
         }
         else if (fleeFromPlayer != null && _canFleeFromPlayer && _agent.isActiveAndEnabled)
         {
-            _agent.SetDestination(-(_player.transform.position - transform.position) * 2);
+            //ELE NAO TA ANDANDO SÓ NA VERTICAL OU SO NA HORIZONTAL*
+
+            Vector2 vec = -(_player.transform.position - transform.position) * 3;
+            if (Mathf.Abs(vec.x) > Mathf.Abs(vec.y))
+            {
+                Vector2 vecx = new Vector2(vec.x, 0);
+                _agent.SetDestination(vecx);
+            }
+            else
+            {
+                Vector2 vecy = new Vector2(0, vec.y);
+                _agent.SetDestination(vecy);
+            }
+
             _canFleeFromPlayer = false;
             ReturnToStartTimer = 0;
             StartCoroutine("FleeFromPlayer");
         }
         else if (setDestination != null && _agent.isActiveAndEnabled && arrowAtk == null && _canFleeFromPlayer)
         {
+            //ELE NAO TA ANDANDO SÓ NA VERTICAL OU SO NA HORIZONTAL*
             ReturnToStartTimer = 0;
-            _agent.SetDestination(_player.transform.position);
+            Vector2 vec = _player.transform.position;
+            if (Mathf.Abs(vec.x) > Mathf.Abs(vec.y))
+            {
+                _agent.SetDestination(new Vector2(vec.x, 0));
+            }
+            else
+            {
+                _agent.SetDestination(new Vector2(0, vec.y));
+            }
 
         }
         else
@@ -103,23 +127,41 @@ public class Math_87 : Enemy
         NavMeshHit hit;
         if (!_agent.Raycast(_player.transform.position, out hit))
         {
+            GameObject projectile;
             _targetPosition = hit.position;
             LastMoveDirection = _agent.velocity;
             Vector2 vec = (_targetPosition - gameObject.transform.position).normalized;
             DisableAgent();
-            GameObject projectile = Instantiate(_projectile, _aim.transform.position, _aim.transform.rotation);
-            if (vec.x < 0)
+            if (Mathf.Abs(vec.x) > Mathf.Abs(vec.y))
             {
-                projectile.GetComponent<Arrow>().ChangeSprite();
-                AnimScript.ArrowAttack(LastMoveDirection.x, LastMoveDirection.y, 3);
+                projectile = Instantiate(_projectile_horizontal, _aim.transform.position, _aim.transform.rotation);
+                if (vec.x < 0)
+                {
+                    projectile.GetComponent<Arrow>().ChangeSprite();
+                    AnimScript.ArrowAttack(LastMoveDirection.x, LastMoveDirection.y, 3);
+                }
+                else
+                {
+                    AnimScript.ArrowAttack(LastMoveDirection.x, LastMoveDirection.y, 1);
+                }
             }
             else
             {
-                AnimScript.ArrowAttack(LastMoveDirection.x, LastMoveDirection.y, 1);
+                projectile = Instantiate(_projectile_vertical, _aim.transform.position, _aim.transform.rotation);
+                if (vec.y < 0)
+                {
+                    projectile.GetComponent<Arrow>().ChangeSprite();
+                    AnimScript.ArrowAttack(LastMoveDirection.x, LastMoveDirection.y, 3);
+                }
+                else
+                {
+                    AnimScript.ArrowAttack(LastMoveDirection.x, LastMoveDirection.y, 1);
+                }
             }
+
             Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
             projectile.GetComponent<Arrow>().Damage = Power / 2;
-            projectile.GetComponent<Rigidbody2D>().AddForce(vec * 11, ForceMode2D.Force);
+            projectile.GetComponent<Rigidbody2D>().AddForce(vec * 20, ForceMode2D.Force);
 
             yield return new WaitForSeconds(0.2f);
             EnableAgent();
