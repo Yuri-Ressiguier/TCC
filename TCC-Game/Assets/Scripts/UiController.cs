@@ -15,6 +15,8 @@ public class UiController : MonoBehaviour
     [field: SerializeField] public TextMeshProUGUI TxtHealthPotions { get; set; }
     [field: SerializeField] public TextMeshProUGUI TxtEnergyWarning { get; set; }
     [field: SerializeField] public TextMeshProUGUI TxtLvl { get; set; }
+    [field: SerializeField] public TextMeshProUGUI DialogueText { get; set; }
+    [field: SerializeField] public TextMeshProUGUI[] TxtChoices { get; set; }
 
     //BTN
     [field: SerializeField] public Button BtnHealthPotion { get; set; }
@@ -22,6 +24,8 @@ public class UiController : MonoBehaviour
     [field: SerializeField] public Button BtnDefense { get; set; }
     [field: SerializeField] public Button BtnInterrupt { get; set; }
     [field: SerializeField] public Button BtnAttack { get; set; }
+    [field: SerializeField] public Button BtnInteract { get; set; }
+    [field: SerializeField] public GameObject[] BtnChoices { get; set; }
 
     //Outros
     [field: SerializeField] private Sprite ImgMelee { get; set; }
@@ -29,8 +33,9 @@ public class UiController : MonoBehaviour
     [field: SerializeField] public Image LifeBar { get; set; }
     [field: SerializeField] public Image EnergyBar { get; set; }
     [field: SerializeField] public Image ExpBar { get; set; }
+    [field: SerializeField] public GameObject DialoguePanel { get; set; }
 
-    public static UiController UiInstance;
+    public static UiController UiInstance { get; private set; }
 
     private void Awake()
     {
@@ -46,11 +51,20 @@ public class UiController : MonoBehaviour
             Destroy(gameObject);
         }
         //GCInstance = this;
+
+        BtnInteract.gameObject.SetActive(false);
     }
 
     private void Start()
     {
         ExpBar.fillAmount = 0;
+        TxtChoices = new TextMeshProUGUI[BtnChoices.Length];
+        int index = 0;
+        foreach (GameObject choice in BtnChoices)
+        {
+            TxtChoices[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
+            index++;
+        }
     }
 
     public void ChangeAttackImg(bool melee)

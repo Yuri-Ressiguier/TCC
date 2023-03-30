@@ -13,6 +13,10 @@ public class PlayerAnim : MonoBehaviour
         Anim = GetComponent<Animator>();
     }
 
+    public void MagnitudeZero()
+    {
+        Anim.SetFloat("Magnitude", 0);
+    }
 
     public void Move(float directionX, float directionY, float magnitude, float lastMoveX, float lastMoveY)
     {

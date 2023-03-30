@@ -273,6 +273,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""78cf2913-9cbb-4e26-854f-0e3e6ea8fa2d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -297,6 +306,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""97d2b38a-2c0d-46ff-b6a2-edcb779f489d"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40e38c78-7c5a-4fa5-8366-ee4fa7ebbce6"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -314,6 +345,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // GameController
         m_GameController = asset.FindActionMap("GameController", throwIfNotFound: true);
         m_GameController_Pause = m_GameController.FindAction("Pause", throwIfNotFound: true);
+        m_GameController_Dialogue = m_GameController.FindAction("Dialogue", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -447,11 +479,13 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_GameController;
     private IGameControllerActions m_GameControllerActionsCallbackInterface;
     private readonly InputAction m_GameController_Pause;
+    private readonly InputAction m_GameController_Dialogue;
     public struct GameControllerActions
     {
         private @PlayerControls m_Wrapper;
         public GameControllerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Pause => m_Wrapper.m_GameController_Pause;
+        public InputAction @Dialogue => m_Wrapper.m_GameController_Dialogue;
         public InputActionMap Get() { return m_Wrapper.m_GameController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -464,6 +498,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnPause;
+                @Dialogue.started -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnDialogue;
+                @Dialogue.performed -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnDialogue;
+                @Dialogue.canceled -= m_Wrapper.m_GameControllerActionsCallbackInterface.OnDialogue;
             }
             m_Wrapper.m_GameControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -471,6 +508,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @Dialogue.started += instance.OnDialogue;
+                @Dialogue.performed += instance.OnDialogue;
+                @Dialogue.canceled += instance.OnDialogue;
             }
         }
     }
@@ -487,5 +527,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public interface IGameControllerActions
     {
         void OnPause(InputAction.CallbackContext context);
+        void OnDialogue(InputAction.CallbackContext context);
     }
 }

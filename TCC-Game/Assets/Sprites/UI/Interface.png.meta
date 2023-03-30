@@ -440,7 +440,7 @@ TextureImporter:
         width: 40
         height: 2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -448,6 +448,69 @@ TextureImporter:
       bones: []
       spriteID: 1d6fda28cec37894ea764412563cde49
       internalID: 1775102482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Interface_16
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 36
+        width: 28
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d981c10b988f69740884e0f6805d49c0
+      internalID: -759184648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Interface_17
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 38
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c08caadcfb8ab7d4c9ffdeddbe408e63
+      internalID: -1730108812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Interface_18
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 32
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfd6fc8b9f02783459272180c942add4
+      internalID: -1364804152
       vertices: []
       indices: 
       edges: []
@@ -466,15 +529,18 @@ TextureImporter:
       Interface_9: -1599291484
       Interface_8: -1900822261
       Interface_2: -828864482
+      Interface_16: -759184648
       Interface_11: -1895774245
       Interface_14: 1589376561
       Interface_10: 202786591
       Interface_0: -141740038
+      Interface_18: -1364804152
       Interface_4: 1829917800
       Interface_7: 2059679085
       Interface_5: -223427354
       Interface_3: -78715724
       Interface_15: 1775102482
+      Interface_17: -1730108812
       Interface_13: 850678282
       Interface_12: -1789882629
       Interface_1: 819086072

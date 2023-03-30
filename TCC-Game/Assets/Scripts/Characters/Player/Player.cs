@@ -1,8 +1,6 @@
-using Newtonsoft.Json.Bson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -167,7 +165,7 @@ public class Player : Character
 
     public void AttackInput()
     {
-        if (!IsStunned)
+        if (!IsStunned && UiController.UiInstance.BtnAttack.gameObject.activeSelf)
         {
             if (_isWalking)
             {
@@ -235,35 +233,43 @@ public class Player : Character
 
     void Move()
     {
-
-        if (IsRangedModeOn)
+        if (!DialogueManager.DialogueInstance.DialogueIsPlaying)
         {
-            //Horizontal
-            if (RangedModeOrientation == 0 || RangedModeOrientation == 2)
+
+
+            if (IsRangedModeOn)
             {
-                Rig.MovePosition(Rig.position + new Vector2(_direction.x, 0) * Time.fixedDeltaTime);
-                AnimScript.MoveRanged(RangedModeOrientation, _direction.x, _direction.y, _direction.magnitude);
+                //Horizontal
+                if (RangedModeOrientation == 0 || RangedModeOrientation == 2)
+                {
+                    Rig.MovePosition(Rig.position + new Vector2(_direction.x, 0) * Time.fixedDeltaTime);
+                    AnimScript.MoveRanged(RangedModeOrientation, _direction.x, _direction.y, _direction.magnitude);
+                }
+                //Vertical
+                else
+                {
+                    Rig.MovePosition(Rig.position + new Vector2(0, _direction.y) * Time.fixedDeltaTime);
+                    AnimScript.MoveRanged(RangedModeOrientation, _direction.x, _direction.y, _direction.magnitude);
+                }
             }
-            //Vertical
             else
             {
-                Rig.MovePosition(Rig.position + new Vector2(0, _direction.y) * Time.fixedDeltaTime);
-                AnimScript.MoveRanged(RangedModeOrientation, _direction.x, _direction.y, _direction.magnitude);
+                //if (Math.Abs(Direction.y) >= Math.Abs(Direction.x))
+                //{
+                //    Rig.MovePosition(Rig.position + new Vector2(0, Direction.y) * Speed * Time.fixedDeltaTime);
+                //}
+                //else
+                //{
+                //    Rig.MovePosition(Rig.position + new Vector2(Direction.x, 0) * Speed * Time.fixedDeltaTime);
+                //}
+                Rig.MovePosition(Rig.position + _direction.normalized * Speed * Time.fixedDeltaTime);
+
+                AnimScript.Move(_direction.x, _direction.y, _direction.magnitude, LastMoveDirection.x, LastMoveDirection.y);
             }
         }
         else
         {
-            //if (Math.Abs(Direction.y) >= Math.Abs(Direction.x))
-            //{
-            //    Rig.MovePosition(Rig.position + new Vector2(0, Direction.y) * Speed * Time.fixedDeltaTime);
-            //}
-            //else
-            //{
-            //    Rig.MovePosition(Rig.position + new Vector2(Direction.x, 0) * Speed * Time.fixedDeltaTime);
-            //}
-            Rig.MovePosition(Rig.position + _direction.normalized * Speed * Time.fixedDeltaTime);
-
-            AnimScript.Move(_direction.x, _direction.y, _direction.magnitude, LastMoveDirection.x, LastMoveDirection.y);
+            AnimScript.MagnitudeZero();
         }
 
     }
