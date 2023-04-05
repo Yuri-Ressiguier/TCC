@@ -12,7 +12,6 @@ public class Gate : MonoBehaviour
     public Vector2 NextMap()
     {
         SceneManager.LoadScene(ToScene);
-
         return PlayerPoint;
     }
 

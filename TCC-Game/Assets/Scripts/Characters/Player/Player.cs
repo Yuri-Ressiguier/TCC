@@ -1,6 +1,8 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -47,6 +49,7 @@ public class Player : Character
     [field: SerializeField] public BoxCollider2D MainCollider { get; set; }
     public int Coins { get; set; }
     public int HealthPotions { get; set; }
+    [field: SerializeField] public CinemachineVirtualCamera VirtualCam { get; set; }
 
     private static Player _instance;
     private void Awake()
@@ -84,6 +87,13 @@ public class Player : Character
         _defenseEnergy = 30;
         _rangedAttackEnergy = 50;
         _interruptEnergy = 30;
+
+        //VirtualCam = FindObjectOfType<CinemachineVirtualCamera>();
+        //VirtualCam.Follow = gameObject.transform;
+
+        GameObject confiner = GameObject.FindGameObjectWithTag("Confiner");
+        VirtualCam.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = confiner.GetComponent<PolygonCollider2D>();
+
 
     }
 
@@ -133,7 +143,12 @@ public class Player : Character
             Vector2 nextPos = other.gameObject.GetComponent<Gate>().NextMap();
             gameObject.transform.position = nextPos;
             LoadState();
+        }
 
+        if (other.gameObject.tag == "Door")
+        {
+            gameObject.transform.position = other.gameObject.GetComponent<Door>().NexRoom();
+            StartCoroutine("LoadFrame");
         }
     }
 
@@ -477,10 +492,26 @@ public class Player : Character
         UiController.UiInstance.TxtHealthPotions.text = HealthPotions.ToString();
         UiController.UiInstance.TxtCoins.text = Coins.ToString();
 
+        //Atualizar Camera
+        //https://gamedev.stackexchange.com/questions/183034/gameobject-find-finds-objects-in-the-old-scene
+        StartCoroutine("LoadFrame");
+
 
     }
 
     //Coroutines
+
+    IEnumerator LoadFrame()
+    {
+        yield return new WaitForNextFrameUnit();
+        //VirtualCam = FindObjectOfType<CinemachineVirtualCamera>();
+        //Debug.Log(VirtualCam.name);
+        //VirtualCam.Follow = gameObject.transform;
+
+        GameObject confiner = GameObject.FindGameObjectWithTag("Confiner");
+        VirtualCam.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = confiner.GetComponent<PolygonCollider2D>();
+
+    }
 
     IEnumerator HealDelay()
     {
