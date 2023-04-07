@@ -41,6 +41,8 @@ public class Player : Character
     private bool _isWalking { get; set; }
     public bool IsRangedModeOn { get; set; }
     public int RangedModeOrientation { get; set; }
+    private bool _isDialoguing { get; set; }
+    private DialogueTrigger _dialogueObjTrigg { get; set; }
 
 
     //Outros
@@ -78,6 +80,7 @@ public class Player : Character
         _expCap = 20;
         _lvl = 1;
         _lvlCap = 20;
+        _isDialoguing = false;
 
         //Energy
         _energyLimit = 100;
@@ -149,6 +152,22 @@ public class Player : Character
         {
             gameObject.transform.position = other.gameObject.GetComponent<Door>().NexRoom();
             StartCoroutine("LoadFrame");
+        }
+
+        if (other.gameObject.tag == "DialogueTrigger")
+        {
+            _isDialoguing = true;
+            _dialogueObjTrigg = other.gameObject.GetComponent<DialogueTrigger>();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "DialogueTrigger")
+        {
+            _isDialoguing = false;
+            _dialogueObjTrigg = other.gameObject.GetComponent<DialogueTrigger>();
+            
         }
     }
 

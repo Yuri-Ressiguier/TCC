@@ -9,7 +9,8 @@ public class DialogueTrigger : MonoBehaviour
 
     [field: SerializeField] private TextAsset _inkJson { get; set; }
 
-    private bool _playerInRange;
+    [field: SerializeField] private bool _playerInRange;
+
 
     private void Awake()
     {
@@ -32,10 +33,13 @@ public class DialogueTrigger : MonoBehaviour
 
     public void Dialogue(InputAction.CallbackContext context)
     {
+        
         if (context.performed)
         {
+            Debug.Log(_playerInRange);
             if (_playerInRange)
             {
+                
                 DialogueManager.DialogueInstance.EnterDialogueMode(_inkJson);
             }
         }
@@ -45,6 +49,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            Debug.Log("entrou");
             _playerInRange = true;
             UiController.UiInstance.BtnInteract.gameObject.SetActive(true);
             UiController.UiInstance.BtnAttack.gameObject.SetActive(false);
@@ -55,6 +60,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            Debug.Log("SAIU");
             _playerInRange = false;
             UiController.UiInstance.BtnInteract.gameObject.SetActive(false);
             UiController.UiInstance.BtnAttack.gameObject.SetActive(true);

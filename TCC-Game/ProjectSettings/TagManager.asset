@@ -8,8 +8,6 @@ TagManager:
   - Item
   - Gate
   - Confiner
-  - Vcam
-  - Door
   layers:
   - Default
   - TransparentFX
