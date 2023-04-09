@@ -8,6 +8,9 @@ TagManager:
   - Item
   - Gate
   - Confiner
+  - Vcam
+  - Door
+  - DialogueTrigger
   layers:
   - Default
   - TransparentFX

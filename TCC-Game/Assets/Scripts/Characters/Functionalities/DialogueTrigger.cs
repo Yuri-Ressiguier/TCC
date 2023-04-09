@@ -9,48 +9,35 @@ public class DialogueTrigger : MonoBehaviour
 
     [field: SerializeField] private TextAsset _inkJson { get; set; }
 
-    [field: SerializeField] private bool _playerInRange;
+    [field: SerializeField] private bool _speaker { get; set; }
+
+    protected bool _canDialogue { get; set; }
+
 
 
     private void Awake()
     {
-        _playerInRange = false;
         _visualCue.SetActive(false);
+        _canDialogue = true;
     }
 
-    private void Update()
-    {
-        if (_playerInRange)
-        {
-            _visualCue.SetActive(true);
 
-        }
-        else
-        {
-            _visualCue.SetActive(false);
-        }
-    }
 
-    public void Dialogue(InputAction.CallbackContext context)
+    public virtual void Dialogue()
     {
-        
-        if (context.performed)
+        if (_canDialogue || _speaker)
         {
-            Debug.Log(_playerInRange);
-            if (_playerInRange)
-            {
-                
-                DialogueManager.DialogueInstance.EnterDialogueMode(_inkJson);
-            }
+            _canDialogue = DialogueController.DialogueInstance.EnterDialogueMode(_inkJson);
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && (_canDialogue || _speaker))
         {
-            Debug.Log("entrou");
-            _playerInRange = true;
+
+            _visualCue.SetActive(true);
             UiController.UiInstance.BtnInteract.gameObject.SetActive(true);
             UiController.UiInstance.BtnAttack.gameObject.SetActive(false);
         }
@@ -60,10 +47,10 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("SAIU");
-            _playerInRange = false;
+
             UiController.UiInstance.BtnInteract.gameObject.SetActive(false);
             UiController.UiInstance.BtnAttack.gameObject.SetActive(true);
+            _visualCue.SetActive(false);
         }
     }
 }

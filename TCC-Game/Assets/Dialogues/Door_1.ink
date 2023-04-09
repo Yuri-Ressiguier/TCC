@@ -1,22 +1,17 @@
-SIGA A LÓGICA:
-7 = 42
-6 = 30
-5 = 20
-4 = 12
-2 = ?
+-> main
+===main===
+SIGA A LÓGICA: <br> 7 = 42 <br> 6 = 30 <br> 5 = 20 <br> 4 = 12 <br> 2 = ?
+    + [6] -> incorreto()
+    + [3] -> incorreto()
+    + [2] -> correto()
 
-+ 6 -> incorreto("6")
-+ 3 -> incorreto("3")
-+ 2 -> incorreto("2")
 
-=== incorreto(questao) ===
-A resposta {questao} está incorreta.
-Os monstros ficarão mais fortes!
-+ [Uma pena!]
+=== incorreto ===
+A resposta está incorreta.<br>Os monstros ficarão mais fortes
 -> END
 
-=== correto(questao) ===
-A resposta {questao} está correta.
-Os monstros ficarão mais fracos!
-+ [Que bom!]
+
+=== correto() ===
+A resposta está correta.<br>Os monstros ficarão mais fracos
 -> END
+

@@ -158,6 +158,7 @@ public class Player : Character
         {
             _isDialoguing = true;
             _dialogueObjTrigg = other.gameObject.GetComponent<DialogueTrigger>();
+
         }
     }
 
@@ -166,8 +167,8 @@ public class Player : Character
         if (other.gameObject.tag == "DialogueTrigger")
         {
             _isDialoguing = false;
-            _dialogueObjTrigg = other.gameObject.GetComponent<DialogueTrigger>();
-            
+            _dialogueObjTrigg = null;
+
         }
     }
 
@@ -197,22 +198,34 @@ public class Player : Character
     }
 
 
-    public void AttackInput()
+    public void AttackInput(InputAction.CallbackContext context)
     {
-        if (!IsStunned && UiController.UiInstance.BtnAttack.gameObject.activeSelf)
+        if (!IsStunned)
         {
-            if (_isWalking)
+            if (!_isDialoguing)
             {
-                if (!IsRangedModeOn)
+                if (_isWalking)
                 {
-                    WalkingAtk();
-                }
+                    if (!IsRangedModeOn)
+                    {
+                        WalkingAtk();
+                    }
 
+                }
+                else
+                {
+                    Attack();
+                }
             }
             else
             {
-                Attack();
+                if (context.performed)
+                {
+                    _dialogueObjTrigg.Dialogue();
+                }
+
             }
+
         }
     }
 
@@ -267,7 +280,7 @@ public class Player : Character
 
     void Move()
     {
-        if (!DialogueManager.DialogueInstance.DialogueIsPlaying)
+        if (!DialogueController.DialogueInstance.DialogueIsPlaying)
         {
 
 

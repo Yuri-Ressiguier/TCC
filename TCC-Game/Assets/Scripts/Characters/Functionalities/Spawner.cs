@@ -31,6 +31,11 @@ public class Spawner : MonoBehaviour
             float newYAxis = transform.position.y + Random.Range(-_rangeLimit, _rangeLimit);
             Enemy newEnemy = Instantiate(_gameObject, new Vector2(newXAxis, newYAxis), Quaternion.identity);
             newEnemy.Spawner = this;
+
+            newEnemy.Power += GameController.GameControllerInstance.Difficult;
+            newEnemy.LifeCap += GameController.GameControllerInstance.Difficult;
+            newEnemy.Life += GameController.GameControllerInstance.Difficult;
+
             ObjectList.Add(newEnemy);
             _totalEnemiesSpawned++;
             StartCoroutine("SpawnEnemy");

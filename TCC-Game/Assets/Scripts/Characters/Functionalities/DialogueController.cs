@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Ink.Runtime;
+using System.Linq;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueController : MonoBehaviour
 {
     private Story _currentStory;
     public bool DialogueIsPlaying;
 
-    public static DialogueManager DialogueInstance { get; private set; }
+    public static DialogueController DialogueInstance { get; private set; }
 
     private void Awake()
     {
@@ -27,7 +28,7 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public bool EnterDialogueMode(TextAsset inkJSON)
     {
         if (!DialogueIsPlaying)
         {
@@ -41,10 +42,12 @@ public class DialogueManager : MonoBehaviour
         {
             UiController.UiInstance.DialogueText.text = _currentStory.Continue();
             DisplayChoices();
+            return true;
         }
         else
         {
             ExitDialogueMode();
+            return false;
         }
     }
 
@@ -62,7 +65,6 @@ public class DialogueManager : MonoBehaviour
         int index = 0;
         foreach (Choice choice in currentChoices)
         {
-            Debug.Log(choice.text + " - " + choice.index);
             UiController.UiInstance.BtnChoices[index].gameObject.SetActive(true);
             UiController.UiInstance.TxtChoices[index].text = choice.text;
             index++;
@@ -74,11 +76,21 @@ public class DialogueManager : MonoBehaviour
     public void MakeChoice(int choiceIndex)
     {
 
-        Debug.Log(choiceIndex);
         _currentStory.ChooseChoiceIndex(choiceIndex);
         if (_currentStory.canContinue)
         {
-            UiController.UiInstance.DialogueText.text = _currentStory.Continue();
+            string txt = _currentStory.Continue();
+            UiController.UiInstance.DialogueText.text = txt;
+            string[] arr = txt.Split(" ");
+            string str = new string(arr[arr.Length - 1].Where(c => char.IsLetter(c)).ToArray());
+            if (str.Equals("fortes"))
+            {
+                GameController.GameControllerInstance.Difficult += GameController.GameControllerInstance.AddDifficult;
+            }
+            else if (str.Equals("fracos"))
+            {
+                GameController.GameControllerInstance.Difficult -= GameController.GameControllerInstance.AddDifficult;
+            }
             foreach (var item in UiController.UiInstance.BtnChoices)
             {
                 item.gameObject.SetActive(false);
