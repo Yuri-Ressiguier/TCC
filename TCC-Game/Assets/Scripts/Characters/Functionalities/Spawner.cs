@@ -11,6 +11,7 @@ public class Spawner : MonoBehaviour
     public List<Enemy> ObjectList { get; set; }
     [field: SerializeField] private int _sumEnemyLimit;
     private int _totalEnemiesSpawned;
+    public bool CanRespawn { get; set; }
 
 
     // Start is called before the first frame update
@@ -19,26 +20,35 @@ public class Spawner : MonoBehaviour
         ObjectList = new List<Enemy>();
         StartCoroutine("SpawnEnemy");
         _totalEnemiesSpawned = 0;
+        CanRespawn = true;
     }
 
 
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(_spawnerInterval);
-        if (ObjectList.Count < _enemyLimit && _totalEnemiesSpawned < _sumEnemyLimit)
+        if (_totalEnemiesSpawned < _sumEnemyLimit)
         {
-            float newXAxis = transform.position.x + Random.Range(-_rangeLimit, _rangeLimit);
-            float newYAxis = transform.position.y + Random.Range(-_rangeLimit, _rangeLimit);
-            Enemy newEnemy = Instantiate(_gameObject, new Vector2(newXAxis, newYAxis), Quaternion.identity);
-            newEnemy.Spawner = this;
+            if (ObjectList.Count < _enemyLimit)
+            {
+                float newXAxis = transform.position.x + Random.Range(-_rangeLimit, _rangeLimit);
+                float newYAxis = transform.position.y + Random.Range(-_rangeLimit, _rangeLimit);
+                Enemy newEnemy = Instantiate(_gameObject, new Vector2(newXAxis, newYAxis), Quaternion.identity);
+                newEnemy.Spawner = this;
 
-            newEnemy.Power += GameController.GameControllerInstance.Difficult;
-            newEnemy.LifeCap += GameController.GameControllerInstance.Difficult;
-            newEnemy.Life += GameController.GameControllerInstance.Difficult;
+                newEnemy.Power += GameController.GameControllerInstance.Difficult;
+                newEnemy.LifeCap += GameController.GameControllerInstance.Difficult;
+                newEnemy.Life += GameController.GameControllerInstance.Difficult;
 
-            ObjectList.Add(newEnemy);
-            _totalEnemiesSpawned++;
-            StartCoroutine("SpawnEnemy");
+                ObjectList.Add(newEnemy);
+                _totalEnemiesSpawned++;
+                StartCoroutine("SpawnEnemy");
+            }
+            
+        }
+        else
+        {
+            CanRespawn = false;
         }
     }
 }
