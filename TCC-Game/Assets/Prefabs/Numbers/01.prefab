@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3587747681506244394}
   - component: {fileID: 3587747681506244392}
   - component: {fileID: 3587747681506244393}
+  - component: {fileID: 932247751}
   m_Layer: 0
   m_Name: 01
   m_TagString: Untagged
@@ -71,10 +72,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -440309835
-  m_SortingLayer: 2
+  m_SortingLayerID: 1088970493
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 323941538, guid: 685e60ec2891aed49a99c3e3c0dcc60d, type: 3}
+  m_Sprite: {fileID: -1148810601, guid: 685e60ec2891aed49a99c3e3c0dcc60d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -111,3 +112,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &932247751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3587747681506244395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3461880961f25a46b31b43c3944c9e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Traps>k__BackingField: []

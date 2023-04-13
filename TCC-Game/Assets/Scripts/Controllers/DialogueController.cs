@@ -61,6 +61,7 @@ public class DialogueController : MonoBehaviour
     private void DisplayChoices()
     {
         List<Choice> currentChoices = _currentStory.currentChoices;
+        UiController.UiInstance.BtnInteract.gameObject.SetActive(false);
 
         int index = 0;
         foreach (Choice choice in currentChoices)
@@ -75,7 +76,7 @@ public class DialogueController : MonoBehaviour
 
     public void MakeChoice(int choiceIndex)
     {
-
+        UiController.UiInstance.BtnInteract.gameObject.SetActive(true);
         _currentStory.ChooseChoiceIndex(choiceIndex);
         if (_currentStory.canContinue)
         {
