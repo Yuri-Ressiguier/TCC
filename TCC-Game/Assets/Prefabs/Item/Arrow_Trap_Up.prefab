@@ -110,7 +110,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7923085773705470980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.59, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -130,6 +130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <_projectilePrefab>k__BackingField: {fileID: 4551572235111391320, guid: aefdd8ccf3f0f2948a943245d4af10ca, type: 3}
-  <_direction>k__BackingField: {x: 0, y: 1}
+  <_direction>k__BackingField: {x: 0, y: -1}
   <_dmg>k__BackingField: 5
   <_appliedForce>k__BackingField: 10

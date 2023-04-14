@@ -31,6 +31,7 @@ public class Spawner : MonoBehaviour
         {
             if (ObjectList.Count < _enemyLimit)
             {
+                Debug.Log("ObjectList.Count < _enemyLimit");
                 float newXAxis = transform.position.x + Random.Range(-_rangeLimit, _rangeLimit);
                 float newYAxis = transform.position.y + Random.Range(-_rangeLimit, _rangeLimit);
                 Enemy newEnemy = Instantiate(_gameObject, new Vector2(newXAxis, newYAxis), Quaternion.identity);
@@ -39,16 +40,20 @@ public class Spawner : MonoBehaviour
                 newEnemy.Power += GameController.GameControllerInstance.Difficult;
                 newEnemy.LifeCap += GameController.GameControllerInstance.Difficult;
                 newEnemy.Life += GameController.GameControllerInstance.Difficult;
-
+            
                 ObjectList.Add(newEnemy);
                 _totalEnemiesSpawned++;
-                StartCoroutine("SpawnEnemy");
+                
+
             }
             
         }
-        else
+        StartCoroutine("SpawnEnemy");
+
+        if (_totalEnemiesSpawned == _sumEnemyLimit && ObjectList.Count == 0)
         {
             CanRespawn = false;
         }
+
     }
 }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ArrowTrap : MonoBehaviour
 {
-    [field: SerializeField] private Arrow _projectilePrefab { get; set; }
-    [field: SerializeField] private Vector2 _direction { get; set; }
-    [field: SerializeField] private float _dmg { get; set; }
+    [field: SerializeField] protected Arrow _projectilePrefab { get; set; }
+    [field: SerializeField] protected Vector2 _direction { get; set; }
+    [field: SerializeField] protected float _dmg { get; set; }
     [field: SerializeField] public float _appliedForce { get; set; }
 
     public void Shoot()

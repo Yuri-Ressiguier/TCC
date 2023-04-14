@@ -70,7 +70,7 @@ public abstract class Enemy : Character
     {
         GenerateExp();
         base.Die();
-        //Spawner.ObjectList.Remove(this);
+        Spawner.ObjectList.Remove(this);
         StartCoroutine("Drop");
     }
 
