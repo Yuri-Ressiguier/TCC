@@ -129,7 +129,7 @@ MonoBehaviour:
   <_doorOpened>k__BackingField: {fileID: -780738670, guid: 685e60ec2891aed49a99c3e3c0dcc60d, type: 3}
   <_nextRoom>k__BackingField: {fileID: 0}
   <_actualRoom>k__BackingField: {fileID: 0}
-  <PlayerPoint>k__BackingField: {x: -0.5, y: -15.5}
+  <PlayerPoint>k__BackingField: {x: -0.5, y: -15}
 --- !u!1 &1554778868544260072
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +178,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
 --- !u!114 &1554778868544260084
 MonoBehaviour:
   m_ObjectHideFlags: 0

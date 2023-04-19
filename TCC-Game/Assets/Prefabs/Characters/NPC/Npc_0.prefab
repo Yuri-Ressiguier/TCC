@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 135355155685121351}
   - component: {fileID: 135355155685121368}
   - component: {fileID: 135355155685121350}
+  - component: {fileID: 2040741324}
   m_Layer: 0
   m_Name: Npc_0
   m_TagString: Untagged
@@ -187,6 +188,26 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.17}
   m_Size: {x: 0.57, y: 0.86}
   m_Direction: 0
+--- !u!95 &2040741324
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135355155685121369}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b2d780e19b1d19c449ad6c3f57dfec7d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &135355155748776653
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,5 +270,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <_visualCue>k__BackingField: {fileID: 135355155644029480}
-  <_inkJson>k__BackingField: {fileID: 4900000, guid: fdf1ce0b49d31324bab467e03e6b7f47, type: 3}
+  <_inkJson>k__BackingField: {fileID: 4900000, guid: 99992ab50de3baf4fb86b1fde68cf42a, type: 3}
   <_speaker>k__BackingField: 1

@@ -19,14 +19,20 @@ public class Tomato : Enemy
     private bool _isRolling { get; set; }
     private float _tomatoInitialPower { get; set; }
 
+    //SFX
+    [field: SerializeField] private AudioClip _sfx { get; set; }
+    private ActorSFX _actorSFX { get; set; }
+
     //Outros
     public TomatoAnim AnimScript { get; set; }
+    [field: SerializeField] private int _meleeForce { get; set; }
 
 
 
     public override void Start()
     {
         base.Start();
+        _actorSFX = GetComponent<ActorSFX>();
         AnimScript = GetComponent<TomatoAnim>();
         StartCoroutine("RollingAtkDelay");
         Rig.isKinematic = true;
@@ -108,6 +114,7 @@ public class Tomato : Enemy
         NavMeshHit hit;
         if (!_agent.Raycast(_player.transform.position, out hit))
         {
+            _actorSFX.PlaySFX(_sfx);
             _targetPosition = hit.position;
             _agent.velocity = Vector3.zero;
             DisableAgent();
@@ -125,7 +132,7 @@ public class Tomato : Enemy
             AnimScript.Rolling(direction);
 
             yield return new WaitForSeconds(3);
-            Rig.AddForce(vec * 500, ForceMode2D.Force);
+            Rig.AddForce(vec * _meleeForce, ForceMode2D.Force);
             yield return new WaitForSeconds(2.5f);
 
             //Se nao colidir em nada
@@ -142,7 +149,6 @@ public class Tomato : Enemy
     {
         yield return new WaitForSeconds(RollingAtkTimeDelay);
         _canRollingAtk = true;
-        Debug.Log("Pode rolar de novo");
     }
 
     IEnumerator StunDelay()

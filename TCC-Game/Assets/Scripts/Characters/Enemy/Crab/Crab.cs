@@ -22,13 +22,19 @@ public class Crab : Enemy
     [field: SerializeField] private GameObject _projectile { get; set; }
     private Vector3 _targetPosition { get; set; }
 
+    //SFX
+    [field: SerializeField] private AudioClip _sfx { get; set; }
+    private ActorSFX _actorSFX { get; set; }
+
     //Outros
     public CrabAnim AnimScript { get; set; }
+    [field: SerializeField] private int _rangedForce { get; set; }
 
 
     public override void Start()
     {
         base.Start();
+        _actorSFX = GetComponent<ActorSFX>();
         AnimScript = GetComponent<CrabAnim>();
         StartCoroutine("MoveAtkDelay");
         StartCoroutine("WaterAtkDelay");
@@ -68,7 +74,7 @@ public class Crab : Enemy
         else if (setDestination != null && _agent.isActiveAndEnabled)
         {
             ReturnToStartTimer = 0;
-            _agent.SetDestination(new Vector2(_player.transform.position.x, 0));
+            _agent.SetDestination(new Vector2(_player.transform.position.x, InitialPosition.y));
         }
         else
         {
@@ -123,14 +129,14 @@ public class Crab : Enemy
         if ((Mathf.Abs(transform.position.x - InitialPosition.x) < 1))
         {
             float newXAxis = transform.position.x + Random.Range(-5, 5);
-            _agent.SetDestination(new Vector2(newXAxis, 0));
+            _agent.SetDestination(new Vector2(newXAxis, InitialPosition.y));
         }
         else
         {
             _agent.isStopped = false;
             Life = LifeCap;
             HealthBar.fillAmount = Life / LifeCap;
-            _agent.SetDestination(new Vector2(InitialPosition.x, 0));
+            _agent.SetDestination(new Vector2(InitialPosition.x, InitialPosition.y));
         }
     }
 
@@ -161,6 +167,7 @@ public class Crab : Enemy
 
                 GameObject projectile = Instantiate(_projectile, transform.position, transform.rotation);
                 Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
+                _actorSFX.PlaySFX(_sfx);
                 projectile.GetComponent<CrabProjectile>().Damage = Power / 2;
                 if (vec.y > 0)
                 {
@@ -170,7 +177,7 @@ public class Crab : Enemy
                 {
                     projectile.GetComponent<CrabProjectile>().AnimDown();
                 }
-                projectile.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, vec.y) * 50, ForceMode2D.Force);
+                projectile.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, vec.y) * _rangedForce, ForceMode2D.Force);
             }
         }
         StartCoroutine("WaterAtkDelay");

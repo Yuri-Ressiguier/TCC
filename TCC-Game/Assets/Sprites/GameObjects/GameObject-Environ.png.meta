@@ -5009,6 +5009,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: GameObject-Environ_233
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 218
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fc6acc46c8041c4ab04b3b7fc3551d2
+      internalID: -614389087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -5021,13 +5042,12 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       GameObject-Environ_130: -2036738178
-      GameObject-Environ_165: 1306681499
+      GameObject-Environ_212: 1815242656
       GameObject-Environ_89: 2077539443
       GameObject-Environ_127: -639265454
-      GameObject-Environ_186: -1062484088
+      GameObject-Environ_165: 1306681499
       GameObject-Environ_185: -1635314184
       GameObject-Environ_146: 1513533140
-      GameObject-Environ_212: 1815242656
       GameObject-Environ_70: -708141477
       GameObject-Environ_119: 1777416279
       GameObject-Environ_36: 159805301
@@ -5045,6 +5065,7 @@ TextureImporter:
       GameObject-Environ_215: -1548961028
       GameObject-Environ_228: -361350213
       GameObject-Environ_76: 2024460080
+      GameObject-Environ_233: -614389087
       GameObject-Environ_168: -1476177125
       GameObject-Environ_181: -365003578
       GameObject-Environ_229: 1663503867
@@ -5251,8 +5272,9 @@ TextureImporter:
       GameObject-Environ_166: -792262666
       GameObject-Environ_30: 994143076
       GameObject-Environ_39: -924775974
-      GameObject-Environ_164: -1438910637
       GameObject-Environ_139: 1104116544
+      GameObject-Environ_164: -1438910637
+      GameObject-Environ_186: -1062484088
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

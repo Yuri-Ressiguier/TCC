@@ -17,7 +17,7 @@ public class Sword : MonoBehaviour
         if (collision.gameObject.tag == "Player" && collision.collider == _player.MainCollider)
         {
             Player other = collision.gameObject.GetComponent<Player>();
-            other.TakeHit(_enemy.Power * 2);
+            other.TakeHit(_enemy.Power * 1.5f);
         }
     }
 }

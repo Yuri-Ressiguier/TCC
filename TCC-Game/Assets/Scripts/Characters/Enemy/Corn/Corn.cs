@@ -21,6 +21,7 @@ public class Corn : Enemy
 
     //Outros
     public CornAnim AnimScript { get; set; }
+    [field: SerializeField] private int _rangedForce { get; set; }
 
 
     // Start is called before the first frame update
@@ -118,7 +119,7 @@ public class Corn : Enemy
             }
             Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
             projectile.GetComponent<CornProjectile>().Damage = Power / 2;
-            projectile.GetComponent<Rigidbody2D>().AddForce(vec * 11, ForceMode2D.Force);
+            projectile.GetComponent<Rigidbody2D>().AddForce(vec * _rangedForce, ForceMode2D.Force);
 
             yield return new WaitForSeconds(0.2f);
             EnableAgent();

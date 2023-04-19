@@ -26,6 +26,8 @@ public class Slime : Enemy
 
     //Outros
     public SlimeAnim AnimScript { get; set; }
+    [field: SerializeField] private int _meleeForce { get; set; }
+    [field: SerializeField] private int _rangedForce { get; set; }
 
 
     public override void Start()
@@ -93,7 +95,7 @@ public class Slime : Enemy
     {
         LastMoveDirection = _agent.velocity;
         DisableAgent();
-        Rig.AddForce(LastMoveDirection * 40, ForceMode2D.Force);
+        Rig.AddForce(LastMoveDirection * _meleeForce, ForceMode2D.Force);
 
         StartCoroutine("MoveAtkDelay");
         AnimScript.MoveAttack(LastMoveDirection.x, LastMoveDirection.y);
@@ -128,7 +130,7 @@ public class Slime : Enemy
             GameObject projectile = Instantiate(_projectile, _aim.transform.position, _aim.transform.rotation);
             Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
             projectile.GetComponent<SlimeProjectile>().Damage = Power / 2;
-            projectile.GetComponent<Rigidbody2D>().AddForce((_targetPosition - projectile.transform.position).normalized * 8, ForceMode2D.Force);
+            projectile.GetComponent<Rigidbody2D>().AddForce((_targetPosition - projectile.transform.position).normalized * _rangedForce, ForceMode2D.Force);
 
             yield return new WaitForSeconds(1.0f);
             EnableAgent();

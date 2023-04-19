@@ -39,11 +39,11 @@ public class Goblin : Enemy
         base.Update();
         if (_isWhirlwind)
         {
-            _agent.speed = 2;
+            _agent.speed *= 1.5f;
         }
         else
         {
-            _agent.speed = 1;
+            _agent.speed = 0.8f;
         }
     }
 

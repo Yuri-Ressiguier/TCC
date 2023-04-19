@@ -11,10 +11,11 @@ public class ArrowTrapON : ArrowTrap
         StartCoroutine("ArrowAttackDelay");
     }
 
-    IEnumerator ArowAttackDelay()
+    IEnumerator ArrowAttackDelay()
     {
         yield return new WaitForSeconds(ArrowTimeDelay);
         Shoot();
+        StartCoroutine("ArrowAttackDelay");
     }
 
 }

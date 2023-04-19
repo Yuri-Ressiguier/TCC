@@ -23,6 +23,7 @@ public class Math_87 : Enemy
 
     //Outros
     public Math_87_Anim AnimScript { get; set; }
+    [field: SerializeField] private int _rangedForce { get; set; }
 
     // Start is called before the first frame update
     public override void Start()
@@ -135,6 +136,7 @@ public class Math_87 : Enemy
             if (Mathf.Abs(vec.x) > Mathf.Abs(vec.y))
             {
                 projectile = Instantiate(_projectile_horizontal, _aim.transform.position, _aim.transform.rotation);
+                Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
                 if (vec.x < 0)
                 {
                     projectile.GetComponent<Arrow>().ChangeSprite();
@@ -159,9 +161,9 @@ public class Math_87 : Enemy
                 }
             }
 
-            Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
+
             projectile.GetComponent<Arrow>().Damage = Power / 2;
-            projectile.GetComponent<Rigidbody2D>().AddForce(vec * 20, ForceMode2D.Force);
+            projectile.GetComponent<Rigidbody2D>().AddForce(vec * _rangedForce, ForceMode2D.Force);
 
             yield return new WaitForSeconds(0.2f);
             EnableAgent();

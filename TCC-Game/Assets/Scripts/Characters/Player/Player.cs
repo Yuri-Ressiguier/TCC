@@ -1,4 +1,5 @@
 using Cinemachine;
+using Ink.Parsed;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,6 +45,11 @@ public class Player : Character
     private bool _isDialoguing { get; set; }
     private DialogueTrigger _dialogueObjTrigg { get; set; }
 
+    //SFX
+    private ActorSFX _actorSFX { get; set; }
+    [field: SerializeField] private AudioClip _drinkPotion { get; set; }
+    [field: SerializeField] private AudioClip _lvlUp { get; set; }
+    [field: SerializeField] private AudioClip _coin { get; set; }
 
     //Outros
     [field: SerializeField] public List<GameObject> _aims { get; set; }
@@ -71,13 +77,15 @@ public class Player : Character
     public override void Start()
     {
         base.Start();
+        _actorSFX = GetComponent<ActorSFX>();
         AnimScript = GetComponent<PlayerAnim>();
         _canAttackMelee = true;
         _canAttackRanged = true;
         _canDefense = true;
         _canInterrupt = true;
+        _canHeal = true;
         IsRangedModeOn = false;
-        _expCap = 20;
+        _expCap = 25;
         _lvl = 1;
         _lvlCap = 20;
         _isDialoguing = false;
@@ -125,6 +133,7 @@ public class Player : Character
             switch (other.gameObject.name)
             {
                 case "Coin":
+                    _actorSFX.PlaySFX(_coin);
                     Coin coin = other.gameObject.GetComponent<Coin>();
                     Coins += coin.Value;
                     UiController.UiInstance.TxtCoins.text = Coins.ToString();
@@ -133,6 +142,14 @@ public class Player : Character
                 case "HealthPotion":
                     HealthPotions += 1;
                     UiController.UiInstance.TxtHealthPotions.text = HealthPotions.ToString();
+                    Destroy(other.gameObject, 0);
+                    break;
+                case "BiggerPotion":
+                    StartCoroutine("BiggerScale");
+                    Destroy(other.gameObject, 0);
+                    break;
+                case "Lvl_Up":
+                    ReceiveExp(30);
                     Destroy(other.gameObject, 0);
                     break;
                 default:
@@ -150,14 +167,30 @@ public class Player : Character
 
         if (other.gameObject.tag == "Door")
         {
-            gameObject.transform.position = other.gameObject.GetComponent<Door>().NexRoom();
-            StartCoroutine("LoadFrame");
+            if (other.GetComponent<Collider2D>().isTrigger)
+            {
+                gameObject.transform.position = other.gameObject.GetComponent<Door>().NexRoom();
+                StartCoroutine("LoadFrame");
+            }
         }
 
         if (other.gameObject.tag == "DialogueTrigger")
         {
             _isDialoguing = true;
             _dialogueObjTrigg = other.gameObject.GetComponent<DialogueTrigger>();
+
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Door")
+        {
+            if (other.GetComponent<Collider2D>().isTrigger)
+            {
+                gameObject.transform.position = other.gameObject.GetComponent<Door>().NexRoom();
+                StartCoroutine("LoadFrame");
+            }
 
         }
     }
@@ -263,16 +296,22 @@ public class Player : Character
 
     public void Heal()
     {
-        if (HealthPotions > 0)
+        if (HealthPotions > 0 && _canHeal)
         {
+            _actorSFX.PlaySFX(_drinkPotion);
             UiController.UiInstance.BtnHealthPotion.interactable = false;
+            _canHeal = false;
             HealthPotions -= 1;
             UiController.UiInstance.TxtHealthPotions.text = HealthPotions.ToString();
             if (Life + HealthPotion.Value >= LifeCap)
             {
                 Life = LifeCap;
             }
-            Life += HealthPotion.Value;
+            else
+            {
+                Life += HealthPotion.Value;
+            }
+
             UiController.UiInstance.LifeBar.fillAmount = Life / LifeCap;
             StartCoroutine("HealDelay");
         }
@@ -471,7 +510,7 @@ public class Player : Character
             int spareExp = exp + _exp - _expCap;
             LevelUp();
             _exp = spareExp;
-            _expCap = (int)Mathf.Round(_expCap * 1.2f);
+            _expCap = (int)Mathf.Round(_expCap * 1.5f);
         }
         else
         {
@@ -484,10 +523,12 @@ public class Player : Character
     {
         if (_lvl < _lvlCap)
         {
+            _actorSFX.PlaySFX(_lvlUp);
             _lvl++;
-            Power += 3;
+            Power += 2;
             LifeCap += 3;
             Life = LifeCap;
+            UiController.UiInstance.LifeBar.fillAmount = Life / LifeCap;
             UiController.UiInstance.TxtLvl.text = _lvl.ToString();
         }
     }
@@ -579,6 +620,22 @@ public class Player : Character
         yield return new WaitForSeconds(InterruptTimeDelay);
         _canInterrupt = true;
         UiController.UiInstance.BtnInterrupt.interactable = true;
+    }
+
+    IEnumerator BiggerScale()
+    {
+        Power += 5;
+        LifeCap += 20;
+        Life = LifeCap;
+        gameObject.transform.localScale = new Vector3(3, 3, 3);
+        yield return new WaitForSeconds(120);
+        Power -= 5;
+        LifeCap -= 20;
+        if (Life > LifeCap)
+        {
+            Life = LifeCap;
+        }
+        gameObject.transform.localScale = new Vector3(1, 1, 1);
     }
 
 }

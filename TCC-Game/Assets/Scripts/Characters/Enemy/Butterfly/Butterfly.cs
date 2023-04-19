@@ -23,6 +23,8 @@ public class Butterfly : Enemy
 
     //Outros
     public ButterflyAnim AnimScript { get; set; }
+    [field: SerializeField] private int _meleeForce { get; set; }
+    [field: SerializeField] private int _rangedForce { get; set; }
 
     // Start is called before the first frame update
     public override void Start()
@@ -89,7 +91,7 @@ public class Butterfly : Enemy
     {
         LastMoveDirection = _agent.velocity;
         DisableAgent();
-        Rig.AddForce(LastMoveDirection * 100, ForceMode2D.Force);
+        Rig.AddForce(LastMoveDirection * _meleeForce, ForceMode2D.Force);
 
         StartCoroutine("StingAtkDelay");
         AnimScript.StingAttack(LastMoveDirection.x, LastMoveDirection.y);
@@ -120,7 +122,7 @@ public class Butterfly : Enemy
             GameObject projectile = Instantiate(_projectile, _aim.transform.position, _aim.transform.rotation);
             Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
             projectile.GetComponent<ButterflyProjectile>().Damage = Power / 2;
-            projectile.GetComponent<Rigidbody2D>().AddForce((_targetPosition - projectile.transform.position).normalized * 8, ForceMode2D.Force);
+            projectile.GetComponent<Rigidbody2D>().AddForce((_targetPosition - projectile.transform.position).normalized * _rangedForce, ForceMode2D.Force);
 
             yield return new WaitForSeconds(0.2f);
             EnableAgent();

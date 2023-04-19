@@ -270,5 +270,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <_visualCue>k__BackingField: {fileID: 135355155644029480}
-  <_inkJson>k__BackingField: {fileID: 4900000, guid: fdf1ce0b49d31324bab467e03e6b7f47, type: 3}
+  <_inkJson>k__BackingField: {fileID: 4900000, guid: b5f3f49b398ddb54b8b368111716ea93, type: 3}
   <_speaker>k__BackingField: 1

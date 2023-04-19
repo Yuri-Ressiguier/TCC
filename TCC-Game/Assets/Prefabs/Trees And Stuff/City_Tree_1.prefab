@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3476501868758854622}
   - component: {fileID: 5652342074114862698}
   - component: {fileID: 5444293307701407620}
-  - component: {fileID: 2805172209499205538}
   m_Layer: 0
   m_Name: City_Tree_1
   m_TagString: Untagged
@@ -114,22 +113,6 @@ BoxCollider2D:
   m_Size: {x: 0.9375, y: 1.01}
   m_EdgeRadius: 0
 --- !u!114 &5444293307701407620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3678262719239211046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 1
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
---- !u!114 &2805172209499205538
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
