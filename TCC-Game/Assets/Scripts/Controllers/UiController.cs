@@ -26,6 +26,7 @@ public class UiController : MonoBehaviour
     [field: SerializeField] public Button BtnAttack { get; set; }
     [field: SerializeField] public Button BtnInteract { get; set; }
     [field: SerializeField] public GameObject[] BtnChoices { get; set; }
+    [field: SerializeField] public Button BtnMenu { get; set; }
 
     //Outros
     [field: SerializeField] private Sprite ImgMelee { get; set; }
@@ -65,6 +66,7 @@ public class UiController : MonoBehaviour
             TxtChoices[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
             index++;
         }
+        BtnMenu.gameObject.SetActive(false);
     }
 
     public void ChangeAttackImg(bool melee)
@@ -94,4 +96,18 @@ public class UiController : MonoBehaviour
         TxtEnergyWarning.alpha = 0;
     }
 
+    public void MenuBtnOn()
+    {
+        BtnMenu.gameObject.SetActive(true);
+    }
+
+    public void MenuBtnOff()
+    {
+        BtnMenu.gameObject.SetActive(false);
+    }
+
+    public void BackToMenu()
+    {
+        GameController.GameControllerInstance.BackToMenu();
+    }
 }

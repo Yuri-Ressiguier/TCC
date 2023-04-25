@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "0c450057-f128-4858-8759-3a1caa54a822",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -236,6 +245,28 @@
                     "action": "Heal",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e56a332-ab4d-4ae1-9204-fde80c26d9b0",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a839ce8-4ffb-4bde-a1fc-e4c2db04ae48",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -243,15 +274,6 @@
             "name": "GameController",
             "id": "692a2203-7e4d-440d-88a5-cbc60d92d05a",
             "actions": [
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "c927d31a-c230-413e-b1f9-65544da07aea",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
                 {
                     "name": "Dialogue",
                     "type": "Button",
@@ -263,28 +285,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "1011b262-b69e-40cb-9fcc-fd4a12e1f2de",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "98bf87dd-c5a5-49f2-852f-702db3b0ffdc",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "97d2b38a-2c0d-46ff-b6a2-edcb779f489d",

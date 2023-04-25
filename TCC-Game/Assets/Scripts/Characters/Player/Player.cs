@@ -205,6 +205,12 @@ public class Player : Character
         }
     }
 
+    public override void Die()
+    {
+        base.Die();
+        GameController.GameControllerInstance.BackToMenu();
+    }
+
     public void MoveInput(InputAction.CallbackContext value)
     {
         if (!IsStunned)
@@ -291,6 +297,14 @@ public class Player : Character
         if (!_isWalking && !IsStunned)
         {
             TurnRangedModeOn();
+        }
+    }
+
+    public void PauseInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            GameController.GameControllerInstance.PauseGame();
         }
     }
 

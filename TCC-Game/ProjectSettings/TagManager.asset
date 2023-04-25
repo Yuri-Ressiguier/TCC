@@ -11,6 +11,7 @@ TagManager:
   - Vcam
   - Door
   - DialogueTrigger
+  - Ui
   layers:
   - Default
   - TransparentFX

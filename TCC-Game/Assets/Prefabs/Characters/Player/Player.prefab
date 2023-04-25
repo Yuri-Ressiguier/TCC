@@ -768,10 +768,6 @@ MonoBehaviour:
     m_ActionId: 8052c21e-9fbd-4b5c-b5c7-560bcf0303e4
     m_ActionName: Player/Change[/Keyboard/g]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c927d31a-c230-413e-b1f9-65544da07aea
-    m_ActionName: GameController/Pause[/Keyboard/space]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7554764238014207126}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
@@ -791,6 +787,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 78cf2913-9cbb-4e26-854f-0e3e6ea8fa2d
     m_ActionName: GameController/Dialogue[/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7554764238014207126}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: PauseInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0c450057-f128-4858-8759-3a1caa54a822
+    m_ActionName: Player/Pause[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -808,7 +820,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0

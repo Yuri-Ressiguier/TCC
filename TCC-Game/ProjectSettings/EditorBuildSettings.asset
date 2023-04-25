@@ -6,9 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 4ba47f097c361094cb86afb79a501ec4
+  - enabled: 1
+    path: Assets/Scenes/Math_Dungeon.unity
+    guid: 234150ea5da24e34395736f384c12c83
+  - enabled: 0
     path: Assets/Scenes/Town.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Forest_1.unity
     guid: 3b839604a2b91484dbd0c7dab3419478
   - enabled: 0
@@ -32,7 +38,4 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Cemetery.unity
     guid: 1696d80ad4d7db741b05e0aa2de13b5a
-  - enabled: 0
-    path: Assets/Scenes/Math_Dungeon.unity
-    guid: 234150ea5da24e34395736f384c12c83
   m_configObjects: {}
