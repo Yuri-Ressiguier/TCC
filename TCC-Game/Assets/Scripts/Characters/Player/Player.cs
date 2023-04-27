@@ -286,10 +286,10 @@ public class Player : Character
 
     public void InterruptInput()
     {
-        if (!_isWalking && !IsRangedModeOn && !IsStunned)
-        {
-            Interrupt();
-        }
+        //if (!_isWalking && !IsRangedModeOn && !IsStunned)
+        //{
+        //    Interrupt();
+        //}
     }
 
     public void RangedModeInput()
@@ -642,7 +642,7 @@ public class Player : Character
         LifeCap += 20;
         Life = LifeCap;
         gameObject.transform.localScale = new Vector3(3, 3, 3);
-        yield return new WaitForSeconds(120);
+        yield return new WaitForSeconds(90);
         Power -= 5;
         LifeCap -= 20;
         if (Life > LifeCap)

@@ -1,7 +1,7 @@
 -> main
 ===main===
-Esqueci de avisar! Você não entrou ali do lado não né? 
-    + [O que que tem na sala ao lado?] -> explicacao()
+Esqueci de avisar! Você não entrou ali do lado não né? Lembre também de não entrar na porta norte da sala acima!
+    + [O que que tem nessas salas?] -> explicacao()
     + [O que são escalas?] -> consequencia()
     + [Quem é você?] -> pessoal()
 
