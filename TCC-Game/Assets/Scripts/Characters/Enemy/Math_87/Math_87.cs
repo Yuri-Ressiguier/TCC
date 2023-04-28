@@ -150,6 +150,7 @@ public class Math_87 : Enemy
             else
             {
                 projectile = Instantiate(_projectile_vertical, _aim.transform.position, _aim.transform.rotation);
+                Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
                 if (vec.y < 0)
                 {
                     projectile.GetComponent<Arrow>().ChangeSprite();

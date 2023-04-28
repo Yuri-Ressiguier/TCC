@@ -377,7 +377,7 @@ MonoBehaviour:
   <_aim>k__BackingField: {fileID: 4886905063296312885}
   <_projectile_horizontal>k__BackingField: {fileID: 6257326912139246290, guid: 0bb0a84b347c1a14aa685d0ea42e69a9, type: 3}
   <_projectile_vertical>k__BackingField: {fileID: 6257326912139246290, guid: 56f9db076e99f0a4f84ab43a157044f2, type: 3}
-  <_rangedForce>k__BackingField: 20
+  <_rangedForce>k__BackingField: 22
 --- !u!114 &4886905062769412609
 MonoBehaviour:
   m_ObjectHideFlags: 0
